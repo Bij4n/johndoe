@@ -64,3 +64,43 @@ describe('Location Data', function() {
         expect(STREET_NAMES.length).toBeGreaterThan(20);
     });
 });
+
+describe('Employment Data', function() {
+
+    it('should have job titles', function() {
+        expect(JOB_TITLES).toBeDefined();
+        expect(JOB_TITLES.length).toBeGreaterThan(20);
+    });
+
+    it('should have company names', function() {
+        expect(COMPANIES).toBeDefined();
+        expect(COMPANIES.length).toBeGreaterThan(15);
+    });
+});
+
+describe('Miscellaneous Data', function() {
+
+    it('should have email domains', function() {
+        expect(EMAIL_DOMAINS).toBeDefined();
+        expect(EMAIL_DOMAINS.length).toBeGreaterThan(5);
+        EMAIL_DOMAINS.forEach(function(domain) {
+            expect(domain).toContain('.');
+        });
+    });
+
+    it('should have browser user agents', function() {
+        expect(BROWSERS).toBeDefined();
+        expect(BROWSERS.length).toBeGreaterThan(3);
+        BROWSERS.forEach(function(ua) {
+            expect(ua).toContain('Mozilla');
+        });
+    });
+
+    it('should have credit card prefixes', function() {
+        expect(CC_PREFIXES).toBeDefined();
+        expect(CC_PREFIXES['Visa']).toBeDefined();
+        expect(CC_PREFIXES['MasterCard']).toBeDefined();
+        expect(CC_PREFIXES['American Express']).toBeDefined();
+        expect(CC_PREFIXES['Discover']).toBeDefined();
+    });
+});
