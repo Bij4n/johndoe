@@ -149,3 +149,54 @@ var CITIES_BY_STATE = {
     'WI': { cities: ['Milwaukee', 'Madison', 'Green Bay'], zipStart: '530' },
     'WY': { cities: ['Cheyenne', 'Casper', 'Laramie'], zipStart: '820' }
 };
+
+var JOB_TITLES = [
+    'Software Developer', 'Accountant', 'Marketing Manager', 'Registered Nurse',
+    'Sales Representative', 'Teacher', 'Graphic Designer', 'Financial Analyst',
+    'Project Manager', 'Human Resources Specialist', 'Mechanical Engineer',
+    'Administrative Assistant', 'Dental Hygienist', 'Electrician',
+    'Real Estate Agent', 'Chef', 'Pharmacist', 'Web Developer',
+    'Civil Engineer', 'Physical Therapist', 'Paralegal', 'Insurance Agent',
+    'Truck Driver', 'Social Worker', 'Veterinarian', 'Network Administrator',
+    'Journalist', 'Architect', 'Police Officer', 'Data Entry Clerk',
+    'Plumber', 'Photographer', 'Librarian', 'Carpenter', 'Receptionist',
+    'Office Manager', 'Bank Teller', 'Delivery Driver', 'Retail Manager',
+    'Security Guard', 'Warehouse Worker', 'Customer Service Rep',
+    'Flight Attendant', 'Loan Officer', 'Maintenance Technician'
+];
+
+var COMPANIES = [
+    'Apex Solutions', 'Meridian Group', 'Summit Technologies',
+    'Pinnacle Services', 'Horizon Enterprises', 'Vanguard Industries',
+    'Sterling Associates', 'Bridgepoint Consulting', 'Lakewood Partners',
+    'Clearwater Systems', 'Atlas Manufacturing', 'Crestview Financial',
+    'Pacific Dynamics', 'Northern Star Corp', 'Redstone Engineering',
+    'Blue Ridge Technologies', 'Granite Solutions', 'Silverline Corp',
+    'Beacon Health', 'Cornerstone Services', 'Iron Gate Industries',
+    'Skyline Consulting', 'Westbrook Partners', 'Evergreen Solutions',
+    'Oakmont Group', 'Riverside Medical', 'Falcon Technologies',
+    'Diamond Systems', 'Coastal Logistics', 'Prairie Wind Energy'
+];
+
+var EMAIL_DOMAINS = [
+    'gmail.com', 'yahoo.com', 'hotmail.com', 'aol.com', 'outlook.com',
+    'mail.com', 'icloud.com', 'comcast.net', 'verizon.net', 'att.net'
+];
+
+var BROWSERS = [
+    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.131 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/7.0.3 Safari/537.75.14',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36',
+    'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:28.0) Gecko/20100101 Firefox/28.0',
+    'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)'
+];
+
+var CC_PREFIXES = {
+    'Visa': ['4'],
+    'MasterCard': ['51', '52', '53', '54', '55'],
+    'American Express': ['34', '37'],
+    'Discover': ['6011', '65']
+};
