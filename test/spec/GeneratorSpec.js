@@ -99,3 +99,40 @@ describe('Contact Generation', function() {
         });
     });
 });
+
+describe('Date of Birth and Age', function() {
+
+    describe('generateDOB', function() {
+        it('should return a date object and formatted string', function() {
+            var dob = generateDOB();
+            expect(dob.date).toBeDefined();
+            expect(dob.date instanceof Date).toBe(true);
+            expect(dob.formatted).toBeDefined();
+        });
+
+        it('should format as MM/DD/YYYY', function() {
+            var dob = generateDOB();
+            expect(dob.formatted).toMatch(/^\d{2}\/\d{2}\/\d{4}$/);
+        });
+
+        it('should generate birthdates for people aged 18-75', function() {
+            for (var i = 0; i < 20; i++) {
+                var dob = generateDOB();
+                var age = calculateAge(dob.date);
+                expect(age).not.toBeLessThan(18);
+                expect(age).not.toBeGreaterThan(76);
+            }
+        });
+    });
+
+    describe('calculateAge', function() {
+        it('should correctly calculate age from a past date', function() {
+            var pastDate = new Date();
+            pastDate.setFullYear(pastDate.getFullYear() - 30);
+            pastDate.setMonth(0);
+            pastDate.setDate(1);
+            var age = calculateAge(pastDate);
+            expect(age).toBe(30);
+        });
+    });
+});
