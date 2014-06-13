@@ -51,3 +51,51 @@ describe('Name Generation', function() {
         });
     });
 });
+
+describe('Contact Generation', function() {
+
+    describe('generateEmail', function() {
+        it('should return a valid-looking email', function() {
+            var email = generateEmail('John', 'Smith');
+            expect(email).toContain('@');
+            var parts = email.split('@');
+            expect(parts.length).toBe(2);
+            expect(EMAIL_DOMAINS).toContain(parts[1]);
+        });
+
+        it('should use lowercase', function() {
+            var email = generateEmail('John', 'Smith');
+            expect(email).toBe(email.toLowerCase());
+        });
+    });
+
+    describe('generatePhone', function() {
+        it('should return a formatted phone number', function() {
+            var phone = generatePhone();
+            expect(phone).toMatch(/^\(\d{3}\) \d{3}-\d{4}$/);
+        });
+    });
+
+    describe('generateAddress', function() {
+        it('should return an address with a number and street', function() {
+            var address = generateAddress();
+            expect(address).toMatch(/^\d+ .+$/);
+        });
+    });
+
+    describe('generateLocation', function() {
+        it('should return city, state, and zip', function() {
+            var loc = generateLocation();
+            expect(loc.city).toBeDefined();
+            expect(loc.state).toBeDefined();
+            expect(loc.stateAbbr).toBeDefined();
+            expect(loc.zip).toBeDefined();
+            expect(loc.street).toBeDefined();
+        });
+
+        it('should have a 5-digit zip code', function() {
+            var loc = generateLocation();
+            expect(loc.zip.length).toBe(5);
+        });
+    });
+});
