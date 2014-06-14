@@ -87,3 +87,34 @@ function calculateAge(dob) {
     }
     return age;
 }
+
+function generateJob() {
+    return {
+        title: randomFrom(JOB_TITLES),
+        company: randomFrom(COMPANIES)
+    };
+}
+
+function generateUsername(firstName, lastName) {
+    var formats = [
+        firstName.toLowerCase().charAt(0) + lastName.toLowerCase() + randomInt(1, 99),
+        firstName.toLowerCase() + '_' + lastName.toLowerCase(),
+        lastName.toLowerCase() + '.' + firstName.toLowerCase().charAt(0),
+        firstName.toLowerCase() + randomInt(100, 999)
+    ];
+    return randomFrom(formats);
+}
+
+function generatePassword() {
+    var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*';
+    var length = randomInt(10, 14);
+    var password = '';
+    for (var i = 0; i < length; i++) {
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return password;
+}
+
+function generateUserAgent() {
+    return randomFrom(BROWSERS);
+}
