@@ -58,3 +58,32 @@ function generateLocation() {
         zip: zip
     };
 }
+
+function generateDOB() {
+    var now = new Date();
+    var minAge = 18;
+    var maxAge = 75;
+    var age = randomInt(minAge, maxAge);
+    var year = now.getFullYear() - age;
+    var month = randomInt(0, 11);
+    var day = randomInt(1, 28);
+    var dob = new Date(year, month, day);
+
+    var monthStr = ('0' + (dob.getMonth() + 1)).slice(-2);
+    var dayStr = ('0' + dob.getDate()).slice(-2);
+
+    return {
+        date: dob,
+        formatted: monthStr + '/' + dayStr + '/' + dob.getFullYear()
+    };
+}
+
+function calculateAge(dob) {
+    var now = new Date();
+    var age = now.getFullYear() - dob.getFullYear();
+    var m = now.getMonth() - dob.getMonth();
+    if (m < 0) {
+        age--;
+    }
+    return age;
+}
