@@ -118,3 +118,17 @@ function generatePassword() {
 function generateUserAgent() {
     return randomFrom(BROWSERS);
 }
+
+function luhnCheckDigit(partial) {
+    var digits = partial.split('').reverse();
+    var sum = 0;
+    for (var i = 0; i < digits.length; i++) {
+        var d = parseInt(digits[i], 10);
+        if (i % 2 === 0) {
+            d = d * 2;
+            if (d > 9) d -= 9;
+        }
+        sum += d;
+    }
+    return ((10 - (sum % 10)) % 10).toString();
+}
