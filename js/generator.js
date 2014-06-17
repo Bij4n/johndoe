@@ -132,3 +132,39 @@ function luhnCheckDigit(partial) {
     }
     return ((10 - (sum % 10)) % 10).toString();
 }
+
+function generateCreditCard() {
+    var types = Object.keys(CC_PREFIXES);
+    var type = randomFrom(types);
+    var prefix = randomFrom(CC_PREFIXES[type]);
+
+    var totalLength = (type === 'American Express') ? 15 : 16;
+    var number = prefix;
+
+    // fill remaining digits (minus one for check digit)
+    while (number.length < totalLength - 1) {
+        number += randomInt(0, 9).toString();
+    }
+
+    // append luhn check digit
+    number += luhnCheckDigit(number);
+
+    // generate expiry (1-5 years in the future from 2014)
+    var expMonth = ('0' + randomInt(1, 12)).slice(-2);
+    var expYear = randomInt(15, 19);
+    var expiry = expMonth + '/' + expYear;
+
+    // cvv
+    var cvvLength = (type === 'American Express') ? 4 : 3;
+    var cvv = '';
+    for (var i = 0; i < cvvLength; i++) {
+        cvv += randomInt(0, 9).toString();
+    }
+
+    return {
+        type: type,
+        number: number,
+        expiry: expiry,
+        cvv: cvv
+    };
+}
