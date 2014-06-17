@@ -187,3 +187,67 @@ describe('Identity Generation', function() {
         });
     });
 });
+
+describe('Credit Card Generation', function() {
+
+    describe('luhnCheck', function() {
+        it('should validate known good numbers', function() {
+            // test Luhn check digit calculation
+            expect(luhnCheckDigit('497940108510733')).toBe('4');
+            expect(luhnCheckDigit('403248882588939')).toBe('1');
+        });
+    });
+
+    describe('generateCreditCard', function() {
+        it('should return type, number, expiry, and cvv', function() {
+            var cc = generateCreditCard();
+            expect(cc.type).toBeDefined();
+            expect(cc.number).toBeDefined();
+            expect(cc.expiry).toBeDefined();
+            expect(cc.cvv).toBeDefined();
+        });
+
+        it('should have a valid card type', function() {
+            var validTypes = ['Visa', 'MasterCard', 'American Express', 'Discover'];
+            var cc = generateCreditCard();
+            expect(validTypes).toContain(cc.type);
+        });
+
+        it('should have correct number length for card type', function() {
+            for (var i = 0; i < 20; i++) {
+                var cc = generateCreditCard();
+                if (cc.type === 'American Express') {
+                    expect(cc.number.length).toBe(15);
+                } else {
+                    expect(cc.number.length).toBe(16);
+                }
+            }
+        });
+
+        it('should pass luhn validation', function() {
+            for (var i = 0; i < 20; i++) {
+                var cc = generateCreditCard();
+                var digits = cc.number;
+                var partial = digits.substring(0, digits.length - 1);
+                var checkDigit = digits.charAt(digits.length - 1);
+                expect(luhnCheckDigit(partial)).toBe(checkDigit);
+            }
+        });
+
+        it('should have a valid expiry format', function() {
+            var cc = generateCreditCard();
+            expect(cc.expiry).toMatch(/^\d{2}\/\d{2}$/);
+        });
+
+        it('should have a 3 or 4 digit cvv', function() {
+            for (var i = 0; i < 20; i++) {
+                var cc = generateCreditCard();
+                if (cc.type === 'American Express') {
+                    expect(cc.cvv.length).toBe(4);
+                } else {
+                    expect(cc.cvv.length).toBe(3);
+                }
+            }
+        });
+    });
+});
