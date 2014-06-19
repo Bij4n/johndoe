@@ -168,3 +168,66 @@ function generateCreditCard() {
         cvv: cvv
     };
 }
+
+function generatePerson() {
+    var gender = generateGender();
+    var name = generateName(gender);
+    var dob = generateDOB();
+    var location = generateLocation();
+    var job = generateJob();
+    var cc = generateCreditCard();
+
+    return {
+        name: name.full,
+        firstName: name.first,
+        lastName: name.last,
+        gender: gender,
+        dob: dob.formatted,
+        age: calculateAge(dob.date),
+        email: generateEmail(name.first, name.last),
+        phone: generatePhone(),
+        address: location.street,
+        city: location.city,
+        state: location.state + ' (' + location.stateAbbr + ')',
+        zip: location.zip,
+        jobTitle: job.title,
+        company: job.company,
+        username: generateUsername(name.first, name.last),
+        password: generatePassword(),
+        browser: generateUserAgent(),
+        ccType: cc.type,
+        ccNumber: cc.number,
+        ccExpiry: cc.expiry,
+        ccCVV: cc.cvv
+    };
+}
+
+$(document).ready(function() {
+
+    $('#generateBtn').on('click', function() {
+        var person = generatePerson();
+
+        $('#fullName').text(person.name);
+        $('#gender').text(person.gender);
+        $('#dob').text(person.dob);
+        $('#age').text(person.age);
+        $('#email').text(person.email);
+        $('#phone').text(person.phone);
+        $('#address').text(person.address);
+        $('#city').text(person.city);
+        $('#state').text(person.state);
+        $('#zip').text(person.zip);
+        $('#jobTitle').text(person.jobTitle);
+        $('#company').text(person.company);
+        $('#username').text(person.username);
+        $('#password').text(person.password);
+        $('#browser').text(person.browser);
+        $('#ccType').text(person.ccType);
+        $('#ccNumber').text(person.ccNumber);
+        $('#ccExpiry').text(person.ccExpiry);
+        $('#ccCVV').text(person.ccCVV);
+
+        $('#results').show();
+    });
+
+});
