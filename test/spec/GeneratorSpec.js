@@ -251,3 +251,39 @@ describe('Credit Card Generation', function() {
         });
     });
 });
+
+describe('generatePerson', function() {
+
+    it('should return a complete person object', function() {
+        var person = generatePerson();
+        expect(person.name).toBeDefined();
+        expect(person.gender).toBeDefined();
+        expect(person.dob).toBeDefined();
+        expect(person.age).toBeDefined();
+        expect(person.email).toBeDefined();
+        expect(person.phone).toBeDefined();
+        expect(person.address).toBeDefined();
+        expect(person.city).toBeDefined();
+        expect(person.state).toBeDefined();
+        expect(person.zip).toBeDefined();
+        expect(person.jobTitle).toBeDefined();
+        expect(person.company).toBeDefined();
+        expect(person.username).toBeDefined();
+        expect(person.password).toBeDefined();
+        expect(person.browser).toBeDefined();
+        expect(person.ccType).toBeDefined();
+        expect(person.ccNumber).toBeDefined();
+        expect(person.ccExpiry).toBeDefined();
+        expect(person.ccCVV).toBeDefined();
+    });
+
+    it('should generate unique people on each call', function() {
+        var person1 = generatePerson();
+        var person2 = generatePerson();
+        // very unlikely to generate the exact same person twice
+        var same = (person1.name === person2.name &&
+                    person1.email === person2.email &&
+                    person1.phone === person2.phone);
+        expect(same).toBe(false);
+    });
+});

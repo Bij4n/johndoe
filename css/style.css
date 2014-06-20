@@ -1,0 +1,47 @@
+body {
+    padding-top: 20px;
+    background-color: #f5f5f5;
+}
+
+h1 {
+    margin-top: 10px;
+    color: #333;
+}
+
+.lead {
+    color: #777;
+}
+
+#generateBtn {
+    margin: 20px 0;
+}
+
+#results hr {
+    margin-top: 30px;
+}
+
+.panel {
+    margin-bottom: 20px;
+}
+
+.panel table {
+    margin-bottom: 0;
+}
+
+.copy-cell {
+    width: 50px;
+    text-align: right;
+}
+
+.copy-btn {
+    font-size: 11px;
+}
+
+#browser {
+    word-break: break-all;
+}
+
+footer {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}

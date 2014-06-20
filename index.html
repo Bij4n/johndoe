@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fake Person Generator - Random Identity for Testing</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Fake Person Generator</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+                <h1>Random Person Generator</h1>
+                <p class="lead">Generate fake identities for testing and development</p>
+                <button id="generateBtn" class="btn btn-primary btn-lg">
+                    <span class="glyphicon glyphicon-user"></span> Generate Person
+                </button>
+            </div>
+        </div>
+
+        <div id="results" style="display: none;">
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><span class="glyphicon glyphicon-user"></span> Personal Information</h3>
+                        </div>
+                        <table class="table table-striped">
+                            <tr><td class="col-xs-4"><strong>Full Name</strong></td><td id="fullName"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="fullName">Copy</button></td></tr>
+                            <tr><td><strong>Gender</strong></td><td id="gender"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="gender">Copy</button></td></tr>
+                            <tr><td><strong>Date of Birth</strong></td><td id="dob"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="dob">Copy</button></td></tr>
+                            <tr><td><strong>Age</strong></td><td id="age"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="age">Copy</button></td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><span class="glyphicon glyphicon-envelope"></span> Contact Information</h3>
+                        </div>
+                        <table class="table table-striped">
+                            <tr><td class="col-xs-4"><strong>Email</strong></td><td id="email"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="email">Copy</button></td></tr>
+                            <tr><td><strong>Phone</strong></td><td id="phone"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="phone">Copy</button></td></tr>
+                            <tr><td><strong>Address</strong></td><td id="address"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="address">Copy</button></td></tr>
+                            <tr><td><strong>City</strong></td><td id="city"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="city">Copy</button></td></tr>
+                            <tr><td><strong>State</strong></td><td id="state"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="state">Copy</button></td></tr>
+                            <tr><td><strong>Zip Code</strong></td><td id="zip"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="zip">Copy</button></td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><span class="glyphicon glyphicon-briefcase"></span> Employment</h3>
+                        </div>
+                        <table class="table table-striped">
+                            <tr><td class="col-xs-4"><strong>Job Title</strong></td><td id="jobTitle"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="jobTitle">Copy</button></td></tr>
+                            <tr><td><strong>Company</strong></td><td id="company"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="company">Copy</button></td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><span class="glyphicon glyphicon-globe"></span> Online Profile</h3>
+                        </div>
+                        <table class="table table-striped">
+                            <tr><td class="col-xs-4"><strong>Username</strong></td><td id="username"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="username">Copy</button></td></tr>
+                            <tr><td><strong>Password</strong></td><td id="password"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="password">Copy</button></td></tr>
+                            <tr><td><strong>Browser</strong></td><td id="browser" class="small"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="browser">Copy</button></td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><span class="glyphicon glyphicon-credit-card"></span> Financial</h3>
+                        </div>
+                        <table class="table table-striped">
+                            <tr><td class="col-xs-4"><strong>Card Type</strong></td><td id="ccType"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="ccType">Copy</button></td></tr>
+                            <tr><td><strong>Card Number</strong></td><td id="ccNumber"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="ccNumber">Copy</button></td></tr>
+                            <tr><td><strong>Expires</strong></td><td id="ccExpiry"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="ccExpiry">Copy</button></td></tr>
+                            <tr><td><strong>CVV</strong></td><td id="ccCVV"></td><td class="copy-cell"><button class="btn btn-xs btn-default copy-btn" data-target="ccCVV">Copy</button></td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/generator.js"></script>
+</body>
+</html>
