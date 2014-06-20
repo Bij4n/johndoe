@@ -230,4 +230,25 @@ $(document).ready(function() {
         $('#results').show();
     });
 
+    // copy individual field
+    $(document).on('click', '.copy-btn', function() {
+        var targetId = $(this).data('target');
+        var text = $('#' + targetId).text();
+        copyToClipboard(text);
+
+        var $btn = $(this);
+        $btn.text('Copied!').addClass('btn-success').removeClass('btn-default');
+        setTimeout(function() {
+            $btn.text('Copy').addClass('btn-default').removeClass('btn-success');
+        }, 1000);
+    });
+
 });
+
+function copyToClipboard(text) {
+    var $temp = $('<textarea>');
+    $('body').append($temp);
+    $temp.val(text).select();
+    document.execCommand('copy');
+    $temp.remove();
+}
