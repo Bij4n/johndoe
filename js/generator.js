@@ -83,7 +83,7 @@ function calculateAge(dob) {
     var now = new Date();
     var age = now.getFullYear() - dob.getFullYear();
     var m = now.getMonth() - dob.getMonth();
-    if (m < 0) {
+    if (m < 0 || (m === 0 && now.getDate() < dob.getDate())) {
         age--;
     }
     return age;
