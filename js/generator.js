@@ -33,8 +33,9 @@ function generateEmail(firstName, lastName) {
 }
 
 function generatePhone() {
-    var area = randomInt(100, 999);
-    var prefix = randomInt(100, 999);
+    // area codes can't start with 0 or 1
+    var area = randomInt(200, 999);
+    var prefix = randomInt(200, 999);
     var line = randomInt(1000, 9999);
     return '(' + area + ') ' + prefix + '-' + line;
 }
