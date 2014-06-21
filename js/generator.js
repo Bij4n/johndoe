@@ -202,10 +202,13 @@ function generatePerson() {
     };
 }
 
+var currentPerson = null;
+
 $(document).ready(function() {
 
     $('#generateBtn').on('click', function() {
         var person = generatePerson();
+        currentPerson = person;
 
         $('#fullName').text(person.name);
         $('#gender').text(person.gender);
@@ -228,6 +231,38 @@ $(document).ready(function() {
         $('#ccCVV').text(person.ccCVV);
 
         $('#results').show();
+        $('#copyAllBtn').show();
+    });
+
+    // copy all fields
+    $('#copyAllBtn').on('click', function() {
+        if (!currentPerson) return;
+        var p = currentPerson;
+        var text = 'Name: ' + p.name + '\n' +
+            'Gender: ' + p.gender + '\n' +
+            'Date of Birth: ' + p.dob + '\n' +
+            'Age: ' + p.age + '\n' +
+            'Email: ' + p.email + '\n' +
+            'Phone: ' + p.phone + '\n' +
+            'Address: ' + p.address + '\n' +
+            'City: ' + p.city + '\n' +
+            'State: ' + p.state + '\n' +
+            'Zip: ' + p.zip + '\n' +
+            'Job Title: ' + p.jobTitle + '\n' +
+            'Company: ' + p.company + '\n' +
+            'Username: ' + p.username + '\n' +
+            'Password: ' + p.password + '\n' +
+            'Card Type: ' + p.ccType + '\n' +
+            'Card Number: ' + p.ccNumber + '\n' +
+            'Expires: ' + p.ccExpiry + '\n' +
+            'CVV: ' + p.ccCVV;
+        copyToClipboard(text);
+
+        var $btn = $(this);
+        $btn.html('<span class="glyphicon glyphicon-ok"></span> Copied!');
+        setTimeout(function() {
+            $btn.html('<span class="glyphicon glyphicon-copy"></span> Copy All');
+        }, 1500);
     });
 
     // copy individual field
