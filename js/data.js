@@ -4,7 +4,14 @@ var MALE_FIRST_NAMES = [
     'Anthony', 'Mark', 'Donald', 'Steven', 'Paul', 'Andrew', 'Joshua',
     'Kenneth', 'Kevin', 'Brian', 'George', 'Timothy', 'Ronald', 'Edward',
     'Jason', 'Jeffrey', 'Ryan', 'Jacob', 'Gary', 'Nicholas', 'Eric',
-    'Jonathan', 'Stephen', 'Larry', 'Justin', 'Scott', 'Brandon'
+    'Jonathan', 'Stephen', 'Larry', 'Justin', 'Scott', 'Brandon',
+    'Benjamin', 'Samuel', 'Raymond', 'Gregory', 'Frank', 'Alexander',
+    'Patrick', 'Jack', 'Dennis', 'Jerry', 'Tyler', 'Aaron', 'Nathan',
+    'Henry', 'Peter', 'Douglas', 'Harold', 'Carl', 'Arthur', 'Albert',
+    'Roger', 'Joe', 'Juan', 'Wayne', 'Ralph', 'Roy', 'Eugene',
+    'Randy', 'Vincent', 'Russell', 'Louis', 'Philip', 'Bobby', 'Harry',
+    'Johnny', 'Gerald', 'Walter', 'Terry', 'Bruce', 'Lawrence', 'Dylan',
+    'Jesse', 'Bryan', 'Billy', 'Christian', 'Alan', 'Sean', 'Howard'
 ];
 
 var FEMALE_FIRST_NAMES = [
@@ -14,7 +21,14 @@ var FEMALE_FIRST_NAMES = [
     'Donna', 'Michelle', 'Carol', 'Amanda', 'Melissa', 'Deborah',
     'Stephanie', 'Rebecca', 'Sharon', 'Laura', 'Cynthia', 'Kathleen',
     'Amy', 'Angela', 'Shirley', 'Anna', 'Brenda', 'Pamela', 'Emma',
-    'Nicole', 'Helen'
+    'Nicole', 'Helen', 'Samantha', 'Katherine', 'Christine', 'Debra',
+    'Rachel', 'Carolyn', 'Janet', 'Catherine', 'Maria', 'Heather',
+    'Diane', 'Ruth', 'Julie', 'Olivia', 'Joyce', 'Virginia', 'Victoria',
+    'Kelly', 'Lauren', 'Christina', 'Joan', 'Evelyn', 'Judith', 'Megan',
+    'Andrea', 'Cheryl', 'Hannah', 'Jacqueline', 'Martha', 'Gloria',
+    'Teresa', 'Ann', 'Sara', 'Madison', 'Frances', 'Kathryn', 'Janice',
+    'Jean', 'Abigail', 'Alice', 'Judy', 'Sophia', 'Grace', 'Denise',
+    'Amber', 'Doris', 'Marilyn', 'Danielle', 'Beverly', 'Isabella'
 ];
 
 var LAST_NAMES = [
