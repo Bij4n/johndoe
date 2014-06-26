@@ -39,9 +39,22 @@ h1 {
 
 #browser {
     word-break: break-all;
+    font-size: 11px;
+}
+
+.table td {
+    vertical-align: middle !important;
+}
+
+#copyAllBtn {
+    margin-left: 10px;
 }
 
 footer {
     margin-top: 30px;
     margin-bottom: 40px;
+}
+
+footer hr {
+    margin-top: 40px;
 }
