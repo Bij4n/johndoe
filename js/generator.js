@@ -231,7 +231,7 @@ $(document).ready(function() {
         $('#ccExpiry').text(person.ccExpiry);
         $('#ccCVV').text(person.ccCVV);
 
-        $('#results').show();
+        $('#results').hide().fadeIn(400);
         $('#copyAllBtn').show();
     });
 
