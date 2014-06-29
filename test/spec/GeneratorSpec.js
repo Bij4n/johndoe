@@ -193,8 +193,8 @@ describe('Credit Card Generation', function() {
     describe('luhnCheck', function() {
         it('should validate known good numbers', function() {
             // test Luhn check digit calculation
-            expect(luhnCheckDigit('497940108510733')).toBe('4');
-            expect(luhnCheckDigit('403248882588939')).toBe('1');
+            expect(luhnCheckDigit('497940108510733')).toBe('1');
+            expect(luhnCheckDigit('403248882588939')).toBe('8');
         });
     });
 
