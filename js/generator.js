@@ -262,7 +262,7 @@ $(document).ready(function() {
         var $btn = $(this);
         $btn.html('<span class="glyphicon glyphicon-ok"></span> Copied!');
         setTimeout(function() {
-            $btn.html('<span class="glyphicon glyphicon-copy"></span> Copy All');
+            $btn.html('<span class="glyphicon glyphicon-save"></span> Copy All');
         }, 1500);
     });
 
