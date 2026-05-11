@@ -11,14 +11,14 @@ function generateGender() {
 }
 
 function generateName(gender) {
-    var firstName;
-    if (gender === 'Male') {
-        firstName = randomFrom(MALE_FIRST_NAMES);
-    } else {
-        firstName = randomFrom(FEMALE_FIRST_NAMES);
-    }
+    var pool = gender === 'Male' ? MALE_FIRST_NAMES : FEMALE_FIRST_NAMES;
+    var firstName = randomFrom(pool);
     var lastName = randomFrom(LAST_NAMES);
-    return { first: firstName, last: lastName, full: firstName + ' ' + lastName };
+    var middleName = Math.random() < 0.8 ? randomFrom(pool) : '';
+    var fullName = middleName
+        ? firstName + ' ' + middleName + ' ' + lastName
+        : firstName + ' ' + lastName;
+    return { first: firstName, middle: middleName, last: lastName, full: fullName };
 }
 
 function generateEmail(firstName, lastName) {
@@ -46,13 +46,26 @@ function generateAddress() {
     return number + ' ' + street;
 }
 
+function generateAddressLine2() {
+    if (Math.random() > 0.35) return '';
+    var type = Math.random() < 0.6 ? 'Apt' : 'Unit';
+    var formats = [
+        randomInt(1, 999).toString(),
+        randomInt(1, 99) + randomFrom(['A','B','C','D','E','F']),
+        randomFrom(['A','B','C','D','E','F','G','H'])
+    ];
+    return type + ' ' + randomFrom(formats);
+}
+
 function generateLocation() {
     var state = randomFrom(STATES);
     var stateData = CITIES_BY_STATE[state.abbr];
-    var city = randomFrom(stateData.cities);
-    var zip = stateData.zipStart + ('0' + randomInt(0, 99)).slice(-2);
+    var cities = Object.keys(stateData);
+    var city = randomFrom(cities);
+    var zip = randomFrom(stateData[city]);
     return {
         street: generateAddress(),
+        address2: generateAddressLine2(),
         city: city,
         state: state.name,
         stateAbbr: state.abbr,
@@ -62,16 +75,12 @@ function generateLocation() {
 
 function generateDOB() {
     var now = new Date();
-    var minAge = 18;
-    var maxAge = 75;
-    var age = randomInt(minAge, maxAge);
-    var year = now.getFullYear() - age;
-    var month = randomInt(0, 11);
-    var day = randomInt(1, 28);
-    var dob = new Date(year, month, day);
+    var earliest = new Date(now.getFullYear() - 75, now.getMonth(), now.getDate());
+    var latest   = new Date(now.getFullYear() - 18, now.getMonth(), now.getDate());
+    var dob = new Date(earliest.getTime() + Math.random() * (latest.getTime() - earliest.getTime()));
 
     var monthStr = ('0' + (dob.getMonth() + 1)).slice(-2);
-    var dayStr = ('0' + dob.getDate()).slice(-2);
+    var dayStr   = ('0' + dob.getDate()).slice(-2);
 
     return {
         date: dob,
@@ -90,35 +99,13 @@ function calculateAge(dob) {
 }
 
 function generateJob() {
+    var sector = randomFrom(JOB_SECTORS);
     return {
-        title: randomFrom(JOB_TITLES),
-        company: randomFrom(COMPANIES)
+        title: randomFrom(sector.titles),
+        company: randomFrom(sector.companies)
     };
 }
 
-function generateUsername(firstName, lastName) {
-    var formats = [
-        firstName.toLowerCase().charAt(0) + lastName.toLowerCase() + randomInt(1, 99),
-        firstName.toLowerCase() + '_' + lastName.toLowerCase(),
-        lastName.toLowerCase() + '.' + firstName.toLowerCase().charAt(0),
-        firstName.toLowerCase() + randomInt(100, 999)
-    ];
-    return randomFrom(formats);
-}
-
-function generatePassword() {
-    var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*';
-    var length = randomInt(10, 14);
-    var password = '';
-    for (var i = 0; i < length; i++) {
-        password += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return password;
-}
-
-function generateUserAgent() {
-    return randomFrom(BROWSERS);
-}
 
 function luhnCheckDigit(partial) {
     var digits = partial.split('').reverse();
@@ -150,12 +137,11 @@ function generateCreditCard() {
     // append luhn check digit
     number += luhnCheckDigit(number);
 
-    // generate expiry (1-5 years in the future from 2014)
     var expMonth = ('0' + randomInt(1, 12)).slice(-2);
-    var expYear = randomInt(15, 19);
-    var expiry = expMonth + '/' + expYear;
+    var expFullYear = (new Date().getFullYear() + randomInt(1, 4)).toString();
+    var expiry     = expMonth + '/' + expFullYear.slice(-2);
+    var expiryFull = expMonth + '/' + expFullYear;
 
-    // cvv
     var cvvLength = (type === 'American Express') ? 4 : 3;
     var cvv = '';
     for (var i = 0; i < cvvLength; i++) {
@@ -166,6 +152,7 @@ function generateCreditCard() {
         type: type,
         number: number,
         expiry: expiry,
+        expiryFull: expiryFull,
         cvv: cvv
     };
 }
@@ -181,6 +168,7 @@ function generatePerson() {
     return {
         name: name.full,
         firstName: name.first,
+        middleName: name.middle,
         lastName: name.last,
         gender: gender,
         dob: dob.formatted,
@@ -188,17 +176,17 @@ function generatePerson() {
         email: generateEmail(name.first, name.last),
         phone: generatePhone(),
         address: location.street,
+        address2: location.address2,
         city: location.city,
         state: location.state + ' (' + location.stateAbbr + ')',
         zip: location.zip,
+        country: 'United States',
         jobTitle: job.title,
         company: job.company,
-        username: generateUsername(name.first, name.last),
-        password: generatePassword(),
-        browser: generateUserAgent(),
         ccType: cc.type,
         ccNumber: cc.number,
         ccExpiry: cc.expiry,
+        ccExpiryFull: cc.expiryFull,
         ccCVV: cc.cvv
     };
 }
@@ -212,27 +200,29 @@ $(document).ready(function() {
         currentPerson = person;
 
         $('#fullName').text(person.name);
+        $('#middleName').text(person.middleName || '—');
         $('#gender').text(person.gender);
         $('#dob').text(person.dob);
         $('#age').text(person.age);
         $('#email').text(person.email);
         $('#phone').text(person.phone);
         $('#address').text(person.address);
+        $('#address2').text(person.address2 || '—');
         $('#city').text(person.city);
         $('#state').text(person.state);
         $('#zip').text(person.zip);
+        $('#country').text(person.country);
         $('#jobTitle').text(person.jobTitle);
         $('#company').text(person.company);
-        $('#username').text(person.username);
-        $('#password').text(person.password);
-        $('#browser').text(person.browser);
         $('#ccType').text(person.ccType);
         $('#ccNumber').text(person.ccNumber);
         $('#ccExpiry').text(person.ccExpiry);
+        $('#ccExpiryFull').text(person.ccExpiryFull);
         $('#ccCVV').text(person.ccCVV);
 
         $('#results').hide().fadeIn(400);
         $('#copyAllBtn').show();
+        $('#exportCsvBtn').show();
     });
 
     // copy all fields
@@ -240,29 +230,31 @@ $(document).ready(function() {
         if (!currentPerson) return;
         var p = currentPerson;
         var text = 'Name: ' + p.name + '\n' +
+            (p.middleName ? 'Middle Name: ' + p.middleName + '\n' : '') +
             'Gender: ' + p.gender + '\n' +
             'Date of Birth: ' + p.dob + '\n' +
             'Age: ' + p.age + '\n' +
             'Email: ' + p.email + '\n' +
             'Phone: ' + p.phone + '\n' +
             'Address: ' + p.address + '\n' +
+            (p.address2 ? 'Address 2: ' + p.address2 + '\n' : '') +
             'City: ' + p.city + '\n' +
             'State: ' + p.state + '\n' +
             'Zip: ' + p.zip + '\n' +
+            'Country: ' + p.country + '\n' +
             'Job Title: ' + p.jobTitle + '\n' +
             'Company: ' + p.company + '\n' +
-            'Username: ' + p.username + '\n' +
-            'Password: ' + p.password + '\n' +
             'Card Type: ' + p.ccType + '\n' +
             'Card Number: ' + p.ccNumber + '\n' +
-            'Expires: ' + p.ccExpiry + '\n' +
+            'Expires (MM/YY): ' + p.ccExpiry + '\n' +
+            'Expires (MM/YYYY): ' + p.ccExpiryFull + '\n' +
             'CVV: ' + p.ccCVV;
         copyToClipboard(text);
 
         var $btn = $(this);
-        $btn.html('<span class="glyphicon glyphicon-ok"></span> Copied!');
+        $btn.html('<i class="bi bi-check-lg"></i> Copied!');
         setTimeout(function() {
-            $btn.html('<span class="glyphicon glyphicon-save"></span> Copy All');
+            $btn.html('<i class="bi bi-clipboard"></i> Copy All');
         }, 1500);
     });
 
@@ -273,18 +265,79 @@ $(document).ready(function() {
         copyToClipboard(text);
 
         var $btn = $(this);
-        $btn.text('Copied!').addClass('btn-success').removeClass('btn-default');
+        $btn.text('Copied!').addClass('btn-success').removeClass('btn-outline-secondary');
         setTimeout(function() {
-            $btn.text('Copy').addClass('btn-default').removeClass('btn-success');
+            $btn.text('Copy').addClass('btn-outline-secondary').removeClass('btn-success');
         }, 1000);
+    });
+
+    // export current person as CSV
+    $('#exportCsvBtn').on('click', function() {
+        if (!currentPerson) return;
+        exportPeopleAsCSV([currentPerson], 'fake-person.csv');
+    });
+
+    // bulk export
+    $('#bulkExportBtn').on('click', function() {
+        var count = Math.min(Math.max(parseInt($('#bulkCount').val()) || 10, 1), 500);
+        var people = [];
+        for (var i = 0; i < count; i++) {
+            people.push(generatePerson());
+        }
+        exportPeopleAsCSV(people, 'fake-people.csv');
     });
 
 });
 
 function copyToClipboard(text) {
-    var $temp = $('<textarea>');
-    $('body').append($temp);
-    $temp.val(text).select();
-    document.execCommand('copy');
-    $temp.remove();
+    navigator.clipboard.writeText(text).catch(function() {
+        var $temp = $('<textarea>');
+        $('body').append($temp);
+        $temp.val(text).select();
+        document.execCommand('copy');
+        $temp.remove();
+    });
+}
+
+var CSV_HEADERS = [
+    'Full Name', 'First Name', 'Middle Name', 'Last Name',
+    'Gender', 'Date of Birth', 'Age',
+    'Email', 'Phone', 'Address', 'Address 2', 'City', 'State', 'Zip', 'Country',
+    'Job Title', 'Company',
+    'Card Type', 'Card Number', 'Expires (MM/YY)', 'Expires (MM/YYYY)', 'CVV'
+];
+
+function csvEscape(val) {
+    var str = String(val);
+    if (str.indexOf(',') !== -1 || str.indexOf('"') !== -1 || str.indexOf('\n') !== -1) {
+        return '"' + str.replace(/"/g, '""') + '"';
+    }
+    return str;
+}
+
+function personToCSVRow(person) {
+    return [
+        person.name, person.firstName, person.middleName, person.lastName,
+        person.gender, person.dob, person.age,
+        person.email, person.phone, person.address, person.address2,
+        person.city, person.state, person.zip, person.country,
+        person.jobTitle, person.company,
+        person.ccType, person.ccNumber, person.ccExpiry, person.ccExpiryFull, person.ccCVV
+    ].map(csvEscape).join(',');
+}
+
+function exportPeopleAsCSV(people, filename) {
+    var rows = [CSV_HEADERS.join(',')];
+    for (var i = 0; i < people.length; i++) {
+        rows.push(personToCSVRow(people[i]));
+    }
+    var blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
 }

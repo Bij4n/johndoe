@@ -33,11 +33,13 @@ describe('Name Generation', function() {
     });
 
     describe('generateName', function() {
-        it('should return an object with first, last, and full name', function() {
+        it('should return an object with first, middle, last, and full name', function() {
             var name = generateName('Male');
             expect(name.first).toBeDefined();
             expect(name.last).toBeDefined();
-            expect(name.full).toBe(name.first + ' ' + name.last);
+            expect(typeof name.middle).toBe('string');
+            expect(name.full).toContain(name.first);
+            expect(name.full).toContain(name.last);
         });
 
         it('should pick male names for Male gender', function() {
@@ -120,7 +122,7 @@ describe('Date of Birth and Age', function() {
                 var dob = generateDOB();
                 var age = calculateAge(dob.date);
                 expect(age).not.toBeLessThan(18);
-                expect(age).not.toBeGreaterThan(76);
+                expect(age).not.toBeGreaterThan(75);
             }
         });
     });
@@ -140,53 +142,19 @@ describe('Date of Birth and Age', function() {
 describe('Employment Generation', function() {
 
     describe('generateJob', function() {
-        it('should return a title and company', function() {
-            var job = generateJob();
-            expect(job.title).toBeDefined();
-            expect(job.company).toBeDefined();
-            expect(JOB_TITLES).toContain(job.title);
-            expect(COMPANIES).toContain(job.company);
-        });
-    });
-});
-
-describe('Identity Generation', function() {
-
-    describe('generateUsername', function() {
-        it('should return a lowercase string', function() {
-            var username = generateUsername('John', 'Smith');
-            expect(username).toBe(username.toLowerCase());
-        });
-
-        it('should contain parts of the name', function() {
-            var username = generateUsername('John', 'Smith');
-            var hasFirst = username.indexOf('john') !== -1 || username.indexOf('j') !== -1;
-            var hasLast = username.indexOf('smith') !== -1 || username.indexOf('s') !== -1;
-            expect(hasFirst || hasLast).toBe(true);
-        });
-    });
-
-    describe('generatePassword', function() {
-        it('should be between 10 and 14 characters', function() {
+        it('should return a title and company from the same sector', function() {
             for (var i = 0; i < 20; i++) {
-                var pass = generatePassword();
-                expect(pass.length).not.toBeLessThan(10);
-                expect(pass.length).not.toBeGreaterThan(14);
+                var job = generateJob();
+                expect(job.title).toBeDefined();
+                expect(job.company).toBeDefined();
+                var sector = JOB_SECTORS.find(function(s) { return s.titles.indexOf(job.title) !== -1; });
+                expect(sector).toBeDefined();
+                expect(sector.companies).toContain(job.company);
             }
         });
-
-        it('should not be empty', function() {
-            expect(generatePassword().length).toBeGreaterThan(0);
-        });
-    });
-
-    describe('generateUserAgent', function() {
-        it('should return a browser string from the list', function() {
-            var ua = generateUserAgent();
-            expect(BROWSERS).toContain(ua);
-        });
     });
 });
+
 
 describe('Credit Card Generation', function() {
 
@@ -257,23 +225,24 @@ describe('generatePerson', function() {
     it('should return a complete person object', function() {
         var person = generatePerson();
         expect(person.name).toBeDefined();
+        expect(typeof person.middleName).toBe('string');
         expect(person.gender).toBeDefined();
         expect(person.dob).toBeDefined();
         expect(person.age).toBeDefined();
         expect(person.email).toBeDefined();
         expect(person.phone).toBeDefined();
         expect(person.address).toBeDefined();
+        expect(typeof person.address2).toBe('string');
         expect(person.city).toBeDefined();
         expect(person.state).toBeDefined();
         expect(person.zip).toBeDefined();
+        expect(person.country).toBe('United States');
         expect(person.jobTitle).toBeDefined();
         expect(person.company).toBeDefined();
-        expect(person.username).toBeDefined();
-        expect(person.password).toBeDefined();
-        expect(person.browser).toBeDefined();
         expect(person.ccType).toBeDefined();
         expect(person.ccNumber).toBeDefined();
         expect(person.ccExpiry).toBeDefined();
+        expect(person.ccExpiryFull).toBeDefined();
         expect(person.ccCVV).toBeDefined();
     });
 

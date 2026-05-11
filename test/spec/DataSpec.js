@@ -49,13 +49,19 @@ describe('Location Data', function() {
         });
     });
 
-    it('should have cities for every state', function() {
+    it('should have cities with real zip codes for every state', function() {
         expect(CITIES_BY_STATE).toBeDefined();
         STATES.forEach(function(state) {
             var stateData = CITIES_BY_STATE[state.abbr];
             expect(stateData).toBeDefined();
-            expect(stateData.cities.length).toBeGreaterThan(0);
-            expect(stateData.zipStart).toBeDefined();
+            var cities = Object.keys(stateData);
+            expect(cities.length).toBeGreaterThan(0);
+            cities.forEach(function(city) {
+                expect(stateData[city].length).toBeGreaterThan(0);
+                stateData[city].forEach(function(zip) {
+                    expect(zip.length).toBe(5);
+                });
+            });
         });
     });
 
@@ -67,14 +73,13 @@ describe('Location Data', function() {
 
 describe('Employment Data', function() {
 
-    it('should have job titles', function() {
-        expect(JOB_TITLES).toBeDefined();
-        expect(JOB_TITLES.length).toBeGreaterThan(20);
-    });
-
-    it('should have company names', function() {
-        expect(COMPANIES).toBeDefined();
-        expect(COMPANIES.length).toBeGreaterThan(15);
+    it('should have job sectors with titles and companies', function() {
+        expect(JOB_SECTORS).toBeDefined();
+        expect(JOB_SECTORS.length).toBeGreaterThan(0);
+        JOB_SECTORS.forEach(function(sector) {
+            expect(sector.titles.length).toBeGreaterThan(0);
+            expect(sector.companies.length).toBeGreaterThan(0);
+        });
     });
 });
 
@@ -85,14 +90,6 @@ describe('Miscellaneous Data', function() {
         expect(EMAIL_DOMAINS.length).toBeGreaterThan(5);
         EMAIL_DOMAINS.forEach(function(domain) {
             expect(domain).toContain('.');
-        });
-    });
-
-    it('should have browser user agents', function() {
-        expect(BROWSERS).toBeDefined();
-        expect(BROWSERS.length).toBeGreaterThan(3);
-        BROWSERS.forEach(function(ua) {
-            expect(ua).toContain('Mozilla');
         });
     });
 
